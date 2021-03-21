@@ -1,12 +1,12 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn} from "typeorm";
 import {classToPlain} from 'class-transformer'
 
 @Entity()
-export default class IEntity {
+export default abstract class IEntity extends BaseEntity{
     @PrimaryGeneratedColumn("uuid")
-    id: number;
+    id: string;
 
-    @Column()
+    @CreateDateColumn()
     createdAt:Date;
 
     toJSON(){
