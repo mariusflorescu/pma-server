@@ -110,4 +110,34 @@ describe('students', () => {
 
     expect(student[0].github_username).toBe("johndoe9");
   });
+
+  //should fail
+  it('Fails to create student Marius', async () => {
+    try {
+      await getRepository(Student).insert({
+        "email":"mariusflorescu23@icloud.com",
+        "password":"ParolaMea1234",
+        "firstname":"Marius",
+        "lastname":"Florescu",
+        "github_username":"mariusflorescu"
+      })
+    } catch (err) {
+      expect(err).toBeInstanceOf(Error);
+    }
+  });
+
+  it('Fails to add student Victor', async () => {
+    try {
+      await getRepository(Student).insert({
+        "username":"victor27",
+        "password":"ParolaMea1234",
+        "firstname":"Victor",
+        "lastname":"Cerna",
+        "github_username":"victorcerna27"
+      })
+    } catch (err) {
+      expect(err).toBeInstanceOf(Error);
+    }
+  });
+
 })
