@@ -42,9 +42,16 @@ const register = async (req:Request,res:Response) => {
     return res.status(400).json(errors);
   }
 
-  if(type === 'student'){
+  if(type === 'STUDENT'){
     const {firstname,lastname,github_username,description} = data;
+    if(firstname.trim() === '') errors.firstname = 'Firstname must not be empty'
+    if(lastname.trim() === '') errors.lastname = 'Lastname must not be empty'
+    if(github_username.trim() === '') errors.github_username = 'Github username must not be empty'
 
+    if(Object.keys(errors).length > 0){
+      return res.status(400).json(errors);
+    }
+  
     try {
       const student = new Student({username,email,password,firstname,lastname,github_username,description})
       errors = await validate(student);
@@ -58,8 +65,15 @@ const register = async (req:Request,res:Response) => {
       return res.status(500).json(err);
     }
 
-  } else if (type === 'company'){
+  } else if (type === 'COMPANY'){
       const {name,website,description} = data;
+
+      if(name.trim() === '') errors.name='Company name must not be empty'
+      if(website.trim() === '') errors.website='Website must not be empty'
+
+      if(Object.keys(errors).length > 0){
+        return res.status(400).json(errors);
+      }
 
       try {
         const company = new Company({username,email,password,name,website,description})

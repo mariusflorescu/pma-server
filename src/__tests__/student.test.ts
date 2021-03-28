@@ -1,4 +1,4 @@
-import { getRepository, QueryFailedError } from 'typeorm';
+import { getRepository } from 'typeorm';
 import Student from '../entities/Student';
 import connection from '../utils/connection';
 
