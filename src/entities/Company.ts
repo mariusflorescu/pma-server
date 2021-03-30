@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
-import {Entity, Column, BeforeInsert} from "typeorm";
+import {Entity, Column, BeforeInsert, OneToMany} from "typeorm";
+import Project from './Project';
 import User from './User'
 
 @Entity("company")
@@ -17,6 +18,9 @@ export default class Company extends User {
 
   @Column()
   website:string;
+
+  @OneToMany(() => Project, project => project.company)
+  projects: Project[];
 
   @BeforeInsert()
   async encryptPassword(){

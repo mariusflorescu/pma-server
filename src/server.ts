@@ -12,6 +12,7 @@ dotenv.config();
 
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/user";
+import projectRoutes from './routes/project';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(
 app.get("/", (_, res) => res.send("Hello form server"));
 app.use("/api", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/projects",projectRoutes);
 
 app.listen(5000, async () => {
 	console.log(`Server running on localhost:${process.env.PORT}`);
