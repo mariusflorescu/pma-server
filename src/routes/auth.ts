@@ -158,12 +158,16 @@ const me = async (req:Request,res:Response) => {
     if(!token) return res.status(401).json({error:'Not authenticated'});
 
     const {username}:any = jwt.verify(token,process.env.JWT_SECRET);
-
+    console.log("HELLO")
     const student = await Student.findOne({username});
-    if(student) return res.json(student);
+    if(student) {
+      return res.json({type:"STUDENT",data:student})
+    };
 
     const company = await Company.findOne({username});
-    if(company) return res.json(company);
+    if(company){
+      return res.json({type:"COMPANY",data:company});
+    }
 
     return res.status(404).json('Account no longer existing');
   } catch (err) {
