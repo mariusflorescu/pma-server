@@ -39,7 +39,7 @@ This is the server of the Project Management App for Software Engineering Fundam
 - [Click here](https://lucid.app/lucidchart/invitations/accept/4d821252-69c9-4bee-8bfa-3a42326eedf4)
 
 #### SQL Diagram:
-- [Click here](https://drawsql.app/me-38/project-management-app)
+- [Click here](https://drawsql.app/me-38/diagrams/project-management-app)
 
 #### How to run ⚙️:
 - You need to have PostgreSQL,Nodejs installed on your local machine.
