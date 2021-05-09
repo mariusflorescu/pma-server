@@ -25,12 +25,21 @@ This is the server of the Project Management App for Software Engineering Fundam
 - '/api/users/companies'
 - 'api/users/student/:id'
 - '/api/users/company/:id' 
-
+###### STUDENT related routes:
+- '/api/projects/all' (fetches all the opened projects)
+- '/api/projects/:id/apply' (apply to a project, id->project id)
+###### COMPANY related routes:
+- '/api/projects/' (fetches all the projects made by that company)
+- '/api/projects/create'
+- '/api/projects/:id/edit' (PUT, id->project id)
+- '/api/projects/:id/delete' (DELETE, id->project.id)
+- '/api/projects/:id/applicants' (fetches all the applicants from a specific project)
+- '/api/projects/application/:id' (PUT, id->application id, changes the status of a application from pending to accepted/declined)
 #### UML Case Diagram:
 - [Click here](https://lucid.app/lucidchart/invitations/accept/4d821252-69c9-4bee-8bfa-3a42326eedf4)
 
 #### SQL Diagram:
-- [Click here](https://drawsql.app/me-38/project-management-app)
+- [Click here](https://drawsql.app/me-38/diagrams/project-management-app)
 
 #### How to run ⚙️:
 - You need to have PostgreSQL,Nodejs installed on your local machine.
