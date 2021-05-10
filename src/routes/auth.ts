@@ -175,11 +175,24 @@ const me = async (req:Request,res:Response) => {
     return res.status(401).json({error:'Not authenticated'});
   }
 }
-    
+
+const logout = async (_: Request, res: Response) => {
+  res.set(
+      "Set-Cookie",
+      cookie.serialize("token", "", {
+        httpOnly: true,
+        expires: new Date(0),
+        path: "/",
+      })
+  );
+
+  return res.status(200).json({ success: true });
+};
 
 const router = Router()
 router.post('/register',register);
 router.post('/login',login);
+router.get('/logout',logout);
 router.get('/me',me);
 
 export default router;
