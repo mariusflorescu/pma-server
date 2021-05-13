@@ -66,14 +66,25 @@ const getCompanyProjects = async (req:Request,res:Response) => {
   const company = res.locals.user;
 
   try {
-    const projects = await Project.find({username:company.username});
-
+    const projects = await Project.find({where: {username:company.username}, relations:["team","applicants"] });
     return res.json(projects);
   } catch (err) {
     console.log(err);
     return res.status(400).json({error:'Ahh...Something went bad'});
   }
 }
+
+const getCompanySpecificProjectDetails = async(req:Request,res:Response) => {
+  const {id} = req.params;
+  
+  try {
+    const project = await Project.findOne({where: {id}, relations:["team","applicants"] });
+    return res.json(project);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({error:'Ahh...Something went bad'});
+  }
+} 
 
 const createProject = async (req:Request,res:Response) => {
   const {name,description,status} = req.body;
@@ -220,6 +231,7 @@ const router = Router();
 //
 router.post('/create',user,isCompany,createProject);
 router.get('/',user,isCompany,getCompanyProjects);
+router.get('/:id',user,isCompany,getCompanySpecificProjectDetails); //where id is PROJECT ID
 router.put('/:id/edit',user,isCompany,editProject); //where id is PROJECT ID
 router.delete('/:id/delete',user,isCompany,deleteProject); //where id is PROJECT ID
 router.get('/:id/applicants',user,isCompany,getApplicants); //where id is PROJECT ID
