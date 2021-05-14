@@ -15,11 +15,8 @@ import user from '../middleware/user'
 const getAllProjects = async (_:Request,res:Response) => {
   try {
     const projects = await Project.find({relations:["applicants"]});
-    if(!projects) return res.status(400);
 
-    const filteredProjects = projects.filter((project) => project.status === 'open');
-
-    return res.json(filteredProjects);
+    return res.status(200).json(projects);
   } catch (err) {
     console.log(err);
     return res.status(400).json({error: 'Ahh...Something went wrong'});
@@ -227,21 +224,20 @@ const changeApplicationStatus = async (req:Request,res:Response) => {
 const router = Router();
 
 //
+// --- STUDENT ROUTES
+//
+router.get('/all',user,isStudent,getAllProjects);
+router.get('/:id/apply',user,isStudent,applyToProject);
+
+//
 // --- COMPANY ROUTES
 //
 router.post('/create',user,isCompany,createProject);
-router.get('/',user,isCompany,getCompanyProjects);
 router.get('/:id',user,isCompany,getCompanySpecificProjectDetails); //where id is PROJECT ID
 router.put('/:id/edit',user,isCompany,editProject); //where id is PROJECT ID
 router.delete('/:id/delete',user,isCompany,deleteProject); //where id is PROJECT ID
 router.get('/:id/applicants',user,isCompany,getApplicants); //where id is PROJECT ID
 router.put('/application/:id',user,isCompany,changeApplicationStatus); //where id is APPLICATION ID
-
-
-//
-// --- STUDENT ROUTES
-//
-router.get('/all',user,isStudent,getAllProjects);
-router.get('/:id/apply',user,isStudent,applyToProject);
+router.get('/',user,isCompany,getCompanyProjects);
 
 export default router;
