@@ -2,6 +2,7 @@ import {Entity, Column, ManyToOne, ManyToMany, OneToOne, OneToMany} from "typeor
 import Application from "./Application";
 import Project from "./Project";
 import User from './User'
+import Task from "./Task";
 
 @Entity("students")
 export default class Student extends User {
@@ -27,4 +28,7 @@ export default class Student extends User {
 
   @OneToMany(() => Application, application => application.student)
   applicant: Application;
+
+  @ManyToOne(() => Task, task => task.student)
+  tasks: Task[];
 }
