@@ -4,6 +4,7 @@ import IEntity from './IEntity'
 import Company from './Company'
 import Student from "./Student";
 import Application from "./Application";
+import Task from "./Task";
 
 @Entity("projects")
 export default class Project extends IEntity{
@@ -37,4 +38,7 @@ export default class Project extends IEntity{
   @OneToMany(() => Application, application => application.project)
   @JoinColumn()
   applicants: Application[]
+
+  @OneToMany(() => Task, task => task.project)
+  tasks: Task[];
 }
