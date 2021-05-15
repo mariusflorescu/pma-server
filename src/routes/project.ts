@@ -140,16 +140,14 @@ const editProject = async(req:Request,res:Response) => {
 
 const deleteProject = async (req:Request,res:Response) => {
   const {id} = req.params;
-  const company = res.locals.user;
+  
 
   try {
-    const project = await Project.findOneOrFail({id});
-
-    //check if project owner
-    if(company.username !== project.username) return res.status(401).json({error: 'Access denied'});
-
-    await project.remove();
-
+    const project = await Project.findOne({where: {id}, relations:["team","applicants"] });
+    project.team = [];
+    project.applicants = [];
+    await Project.save(project); //sorry, not sorry xD. The best I could do :D
+    await Project.remove(project);
     return res.json({
       success:true,
       message: 'Project deleted successfully'
