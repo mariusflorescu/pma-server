@@ -38,8 +38,7 @@ const createProjectTask = async (req:Request, res: Response) => {
 }
 
 const getProjectTasks = async (req: Request,res: Response) => {
-    const {projectId} = req.body;
-
+    const {projectId} = req.query;
     try{
         let tasks = await Task.find({relations: ["student"]});
         tasks = tasks.filter((task) => task.projectId === projectId);
