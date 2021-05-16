@@ -5,6 +5,7 @@ import Project from "../entities/Project";
 import isCompany from "../middleware/isCompany";
 import isStudent from '../middleware/isStudent'
 import user from '../middleware/user'
+import Student from "../entities/Student";
 
 /*
 *
@@ -216,7 +217,18 @@ const changeApplicationStatus = async (req:Request,res:Response) => {
     console.log(err);
     return res.status(400).json({error: 'Ahh...Something went bad'})
   }
+}
 
+const getStudentProject = async (req:Request,res:Response) => {
+  try{
+    const user = res.locals.user;
+
+    const student = await Student.findOneOrFail({where:{id: user.id}, relations: ['project']});
+
+    return res.status(200).json(student.project);
+  }catch(e){
+    return res.status(500).json({error: 'Ahh... Something went wrong'});
+  }
 }
 
 const router = Router();
@@ -225,13 +237,14 @@ const router = Router();
 // --- STUDENT ROUTES
 //
 router.get('/all',user,isStudent,getAllProjects);
+router.get('/student',user,isStudent,getStudentProject);
 router.get('/:id/apply',user,isStudent,applyToProject);
 
 //
 // --- COMPANY ROUTES
 //
 router.post('/create',user,isCompany,createProject);
-router.get('/:id',user,isCompany,getCompanySpecificProjectDetails); //where id is PROJECT ID
+router.get('/:id',user,getCompanySpecificProjectDetails); //where id is PROJECT ID
 router.put('/:id/edit',user,isCompany,editProject); //where id is PROJECT ID
 router.delete('/:id/delete',user,isCompany,deleteProject); //where id is PROJECT ID
 router.get('/:id/applicants',user,isCompany,getApplicants); //where id is PROJECT ID
